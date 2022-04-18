@@ -1,2 +1,4 @@
-package algorithms.mazeGenerator;public class EmptyMazeGenerator {
+package algorithms.mazeGenerator;
+
+public class EmptyMazeGenerator extends AMazeGenerator{
 }

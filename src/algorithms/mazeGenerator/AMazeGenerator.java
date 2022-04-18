@@ -1,4 +1,4 @@
 package algorithms.mazeGenerator;
 
-public class AMazeGenerator {
+public abstract class AMazeGenerator implements IMazeGenerator {
 }
