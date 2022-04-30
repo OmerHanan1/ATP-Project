@@ -1,4 +1,4 @@
-package algorithms.mazeGenerator;
+package algorithms.mazeGenerators;
 
 /**
  * Maze class
@@ -45,6 +45,10 @@ public class Maze {
             }
         }
     }
+    public void print(){
+        //TODO: Implements this function.
+    }
+
     public int getRows()
     {
         return maze.length;
@@ -58,11 +62,11 @@ public class Maze {
         return maze;
     }
 
-    public Position getStart() {
+    public Position getStartPosition() {
         return start;
     }
 
-    public Position getGoal() {
+    public Position getGoalPosition() {
         return goal;
     }
 }
