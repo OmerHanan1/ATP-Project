@@ -56,6 +56,24 @@ public class Position {
         this.col = col;
     }
 
+    // Get the relevant position neighbors: Up/Down/Right/Left.
+    public Position Up(){
+        // i-1
+        return new Position(this.row-1, this.col);
+    }
+    public Position Down(){
+        // i+1
+        return new Position(this.row+1, this.col);
+    }
+    public Position Right(){
+        // j+1
+        return new Position(this.row, this.col+1);
+    }
+    public Position Left(){
+        // j-1
+        return new Position(this.row, this.col-1);
+    }
+
     @Override
     public String toString() {
         return "{" + this.row + "," + this.col + '}';
