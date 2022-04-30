@@ -25,5 +25,15 @@ public class Maze {
         this.goal = new Position(rows-1, columns-1);
     }
 
+    public int[][] getMaze() {
+        return maze;
+    }
 
+    public Position getStart() {
+        return start;
+    }
+
+    public Position getGoal() {
+        return goal;
+    }
 }
