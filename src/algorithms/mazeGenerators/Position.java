@@ -1,4 +1,4 @@
-package algorithms.mazeGenerator;
+package algorithms.mazeGenerators;
 
 import java.util.Objects;
 
@@ -54,6 +54,11 @@ public class Position {
             throw new IllegalArgumentException("Col index must be greater to equal to 0.");
         }
         this.col = col;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.row + "," + this.col + '}';
     }
 
     // Equals & HashCode templates (overrides the Object class functions).

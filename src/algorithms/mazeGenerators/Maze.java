@@ -1,4 +1,4 @@
-package algorithms.mazeGenerator;
+package algorithms.mazeGenerators;
 
 /**
  * Maze class
@@ -45,6 +45,25 @@ public class Maze {
             }
         }
     }
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String RESET = "\033[0m";  // Text Reset
+
+    public void print() {
+
+        for (int i = 0; i < this.getRows(); i++) {
+            System.out.print("{");
+            for (int j = 0; j < this.getCols(); j++) {
+                if (this.start.equals(new Position(i, j)))
+                    System.out.print(RED + " S" + RESET);
+                else if (this.goal.equals(new Position(i, j)))
+                    System.out.print(RED + " F" + RESET);
+                else
+                    System.out.print(" " + this.maze[i][j]);
+            }
+            System.out.println(" }");
+        }
+    }
+
     public int getRows()
     {
         return maze.length;
@@ -58,11 +77,11 @@ public class Maze {
         return maze;
     }
 
-    public Position getStart() {
+    public Position getStartPosition() {
         return start;
     }
 
-    public Position getGoal() {
+    public Position getGoalPosition() {
         return goal;
     }
 }
