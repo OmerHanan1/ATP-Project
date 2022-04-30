@@ -37,6 +37,14 @@ public class Maze {
         this.goal = goal;
     }
 
+    public void initialize(){
+        for (int i=0; i<this.getRows(); ++i){
+            for (int j=0; j< this.getCols(); ++j){
+                // transition => 0 equality (final).
+                maze[i][j] = TRAN;
+            }
+        }
+    }
     public int getRows()
     {
         return maze.length;
