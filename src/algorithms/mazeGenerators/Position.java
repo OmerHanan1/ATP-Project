@@ -56,6 +56,11 @@ public class Position {
         this.col = col;
     }
 
+    @Override
+    public String toString() {
+        return "{" + this.row + "," + this.col + '}';
+    }
+
     // Equals & HashCode templates (overrides the Object class functions).
     // Provides position equality options.
     @Override
