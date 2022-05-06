@@ -24,14 +24,14 @@ public class SimpleMazeGenerator extends AMazeGenerator{
 
         while (!currentPosition.equals(maze.getGoalPosition())) {
             if (random.nextInt(2) == 0) {
-                if (currentPosition.getRow() > maze.getGoalPosition().getRow())
+                if (currentPosition.getRowIndex() > maze.getGoalPosition().getRowIndex())
                     currentPosition = currentPosition.Up();
-                if (currentPosition.getRow() < maze.getGoalPosition().getRow())
+                if (currentPosition.getRowIndex() < maze.getGoalPosition().getRowIndex())
                     currentPosition = currentPosition.Down();
             } else {
-                if (currentPosition.getCol() > maze.getGoalPosition().getCol())
+                if (currentPosition.getColumnIndex() > maze.getGoalPosition().getColumnIndex())
                     currentPosition = currentPosition.Left();
-                if (currentPosition.getCol() < maze.getGoalPosition().getCol())
+                if (currentPosition.getColumnIndex() < maze.getGoalPosition().getColumnIndex())
                     currentPosition = currentPosition.Right();
             }
 

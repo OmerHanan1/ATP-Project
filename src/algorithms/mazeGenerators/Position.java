@@ -34,7 +34,7 @@ public class Position {
         }
     }
 
-    public int getRow() {
+    public int getRowIndex() {
         return row;
     }
 
@@ -45,7 +45,7 @@ public class Position {
         this.row = row;
     }
 
-    public int getCol() {
+    public int getColumnIndex() {
         return col;
     }
 
