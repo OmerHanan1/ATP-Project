@@ -1,4 +1,4 @@
-package algorithms.searh;
+package algorithms.search;
 
 public class Solution {
 }
