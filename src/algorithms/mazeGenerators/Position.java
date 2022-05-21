@@ -69,19 +69,19 @@ public class Position {
     }
 
     // Get the relevant position neighbors: Up/Down/Right/Left.
-    public Position Up(){
+    public Position getUpPosition(){
         // i-1
         return new Position(this.row-1, this.col);
     }
-    public Position Down(){
+    public Position getDownPosition(){
         // i+1
         return new Position(this.row+1, this.col);
     }
-    public Position Right(){
+    public Position getRightPosition(){
         // j+1
         return new Position(this.row, this.col+1);
     }
-    public Position Left(){
+    public Position getLeftPosition(){
         // j-1
         return new Position(this.row, this.col-1);
     }

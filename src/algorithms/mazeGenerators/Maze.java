@@ -43,11 +43,11 @@ public class Maze {
         this.goal = goal;
     }
 
-    public int getRows() {
+    public int getMazeNumOfRows() {
         return maze.length;
     }
 
-    public int getCols() {
+    public int getMazeNumOfCols() {
         return maze[0].length;
     }
 
@@ -65,8 +65,8 @@ public class Maze {
 
     // Init maze with transitions "0"
     public void TranInitialize() {
-        for (int i = 0; i < this.getRows(); ++i) {
-            for (int j = 0; j < this.getCols(); ++j) {
+        for (int i = 0; i < this.getMazeNumOfRows(); ++i) {
+            for (int j = 0; j < this.getMazeNumOfCols(); ++j) {
                 // transition => 0 equality (final).
                 maze[i][j] = TRAN;
             }
@@ -76,14 +76,14 @@ public class Maze {
     // Check position inside array bounds and position is legal.
     public boolean validMazePosition(Position position) {
         return (position != null &&
-                0 <= position.getRowIndex() && position.getRowIndex() < this.getRows() &&
-                0 <= position.getColumnIndex() && position.getColumnIndex() < this.getCols());
+                0 <= position.getRowIndex() && position.getRowIndex() < this.getMazeNumOfRows() &&
+                0 <= position.getColumnIndex() && position.getColumnIndex() < this.getMazeNumOfCols());
     }
 
     // Init maze with walls "1"
     public void WallInitialize() {
-        for (int i = 0; i < this.getRows(); ++i) {
-            for (int j = 0; j < this.getCols(); ++j) {
+        for (int i = 0; i < this.getMazeNumOfRows(); ++i) {
+            for (int j = 0; j < this.getMazeNumOfCols(); ++j) {
                 // Wall => 1 equality (final).
                 maze[i][j] = WALL;
             }
@@ -101,9 +101,9 @@ public class Maze {
 
     // Print the maze in needed format
     public void print() {
-        for (int i = 0; i < this.getRows(); i++) {
+        for (int i = 0; i < this.getMazeNumOfRows(); i++) {
             System.out.print("{");
-            for (int j = 0; j < this.getCols(); j++) {
+            for (int j = 0; j < this.getMazeNumOfCols(); j++) {
                 if (this.start.equals(new Position(i, j)))
                     System.out.print(RED + " S" + RESET);
                 else if (this.goal.equals(new Position(i, j)))
@@ -119,16 +119,16 @@ public class Maze {
     public ArrayList<Position> GetWallNeighbour(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up();
+            Position up = currentPosition.getUpPosition();
             if (this.validMazePosition(up) && IsWall(up)) //UP
                 wallsList.add(up);
-            Position right = currentPosition.Right();
+            Position right = currentPosition.getRightPosition();
             if (this.validMazePosition(right) && IsWall(right)) //RIGHT
                 wallsList.add(right);
-            Position down = currentPosition.Down();
+            Position down = currentPosition.getDownPosition();
             if (this.validMazePosition(down) && IsWall(down)) //DOWN
                 wallsList.add(down);
-            Position left = currentPosition.Left();
+            Position left = currentPosition.getLeftPosition();
             if (this.validMazePosition(left) && IsWall(left)) //LEFT
                 wallsList.add(left);
         }
@@ -139,16 +139,16 @@ public class Maze {
     public ArrayList<Position> GetTransitionNeighbour(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up();
+            Position up = currentPosition.getUpPosition();
             if (this.validMazePosition(up) && !IsWall(up)) //UP
                 wallsList.add(up);
-            Position right = currentPosition.Right();
+            Position right = currentPosition.getRightPosition();
             if (this.validMazePosition(right) && !IsWall(right)) //RIGHT
                 wallsList.add(right);
-            Position down = currentPosition.Down();
+            Position down = currentPosition.getDownPosition();
             if (this.validMazePosition(down) && !IsWall(down)) //DOWN
                 wallsList.add(down);
-            Position left = currentPosition.Left();
+            Position left = currentPosition.getLeftPosition();
             if (this.validMazePosition(left) && !IsWall(left)) //LEFT
                 wallsList.add(left);
         }
@@ -159,16 +159,16 @@ public class Maze {
     public ArrayList<Position> wallsTwoStepsAway(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up().Up();
+            Position up = currentPosition.getUpPosition().getUpPosition();
             if (this.validMazePosition(up) && IsWall(up))
                 wallsList.add(up);
-            Position right = currentPosition.Right().Right();
+            Position right = currentPosition.getRightPosition().getRightPosition();
             if (this.validMazePosition(right) && IsWall(right))
                 wallsList.add(right);
-            Position down = currentPosition.Down().Down();
+            Position down = currentPosition.getDownPosition().getDownPosition();
             if (this.validMazePosition(down) && IsWall(down))
                 wallsList.add(down);
-            Position left = currentPosition.Left().Left();
+            Position left = currentPosition.getLeftPosition().getLeftPosition();
             if (this.validMazePosition(left) && IsWall(left))
                 wallsList.add(left);
         }
@@ -187,7 +187,7 @@ public class Maze {
     // Connect two positions
     public void connectNeighbours(Position currentPosition, Position neighbour) throws IllegalArgumentException {
         if (!this.validMazePosition(currentPosition)) {
-            throw new IllegalArgumentException("one of the given positions is not a valid position in the maze");
+            throw new IllegalArgumentException();
         }
         if (currentPosition.getColumnIndex() == neighbour.getColumnIndex()) {
             this.SetTransition(new Position(Math.min(neighbour.getRowIndex(), currentPosition.getRowIndex()) + 1, currentPosition.getColumnIndex()));

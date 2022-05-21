@@ -67,7 +67,7 @@ public class Maze3D {
     }
 
     public void SetTransition(Position3D position) {
-        if(isValidPosition(position)){
+        if (isValidPosition(position)) {
             this.maze[position.getDepthIndex()][position.getRowIndex()][position.getColumnIndex()] = TRAN;
         }
     }
@@ -152,7 +152,36 @@ public class Maze3D {
     }
 
     public void connectNeighbours(Position3D currentPosition, Position3D neighbour) throws IllegalArgumentException {
+        if (!isValidPosition(currentPosition) || !isValidPosition(neighbour))
+            throw new IllegalArgumentException();
 
+        // same layer (implementation as if it was 2d maze)
+        if (currentPosition.getDepthIndex() == neighbour.getDepthIndex()) {
+            if (currentPosition.getRowIndex() == neighbour.getRowIndex()) {
+                this.SetTransition(new Position3D(currentPosition.getDepthIndex(), currentPosition.getRowIndex(), Math.min(neighbour.getColumnIndex(), currentPosition.getColumnIndex()) + 1));
+            } else if (currentPosition.getColumnIndex() == neighbour.getColumnIndex()) {
+                this.SetTransition(new Position3D(currentPosition.getDepthIndex(), Math.min(neighbour.getRowIndex(), currentPosition.getRowIndex()) + 1, currentPosition.getColumnIndex()));
+            }
+
+            // same layer (row)
+        } else if (currentPosition.getRowIndex() == neighbour.getRowIndex()) {
+            if (currentPosition.getDepthIndex() == neighbour.getDepthIndex()) {
+                this.SetTransition(new Position3D(currentPosition.getDepthIndex(), currentPosition.getRowIndex(), Math.min(neighbour.getColumnIndex(), currentPosition.getColumnIndex()) + 1));
+            } else if (currentPosition.getColumnIndex() == neighbour.getColumnIndex()) {
+                this.SetTransition(new Position3D(Math.min(currentPosition.getDepthIndex(), neighbour.getDepthIndex()) + 1, currentPosition.getRowIndex(), currentPosition.getColumnIndex()));
+            }
+
+            // same layer (col)
+        } else if (currentPosition.getColumnIndex() == neighbour.getColumnIndex()) {
+            if (currentPosition.getDepthIndex() == neighbour.getDepthIndex()) {
+                this.SetTransition(new Position3D(currentPosition.getDepthIndex(), Math.min(currentPosition.getRowIndex(), neighbour.getRowIndex()) + 1, Math.min(neighbour.getColumnIndex(), currentPosition.getColumnIndex()) + 1));
+            } else if (currentPosition.getRowIndex() == neighbour.getRowIndex()) {
+                this.SetTransition(new Position3D(Math.min(currentPosition.getDepthIndex(), neighbour.getDepthIndex()) + 1, currentPosition.getRowIndex(), currentPosition.getColumnIndex()));
+            }
+        }
+        else {
+
+        }
     }
 
 
