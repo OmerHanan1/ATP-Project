@@ -18,7 +18,6 @@ public class Position3D {
 
     // Pay attention to the chronology: depth > row > col:
     // {d,r,c}.
-
     /**
      * C-tor // string based format constructor
      */
