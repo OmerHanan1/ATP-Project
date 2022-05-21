@@ -1,6 +1,8 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Maze class
@@ -39,6 +41,26 @@ public class Maze {
         this.maze = maze;
         this.start = start;
         this.goal = goal;
+    }
+
+    public int getRows() {
+        return maze.length;
+    }
+
+    public int getCols() {
+        return maze[0].length;
+    }
+
+    public int[][] getMaze() {
+        return maze;
+    }
+
+    public Position getStartPosition() {
+        return start;
+    }
+
+    public Position getGoalPosition() {
+        return goal;
     }
 
     // Init maze with transitions "0"
@@ -174,23 +196,20 @@ public class Maze {
         }
     }
 
-    public int getRows() {
-        return maze.length;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Maze maze1 = (Maze) o;
+        return Arrays.equals(maze, maze1.maze) &&
+                start.equals(maze1.start) &&
+                goal.equals(maze1.goal);
     }
 
-    public int getCols() {
-        return maze[0].length;
-    }
-
-    public int[][] getMaze() {
-        return maze;
-    }
-
-    public Position getStartPosition() {
-        return start;
-    }
-
-    public Position getGoalPosition() {
-        return goal;
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(start, goal);
+        result = 31 * result + Arrays.hashCode(maze);
+        return result;
     }
 }
