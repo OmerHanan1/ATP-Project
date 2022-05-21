@@ -1,6 +1,6 @@
 # ATP-Project-PartA
 
-## Project Idea:
+## Maze generation - Project Idea:
 Create maze game using Design patterns and software architecture principles from the course.
 the first part is about Generating mazes.
 
