@@ -196,6 +196,37 @@ public class Maze {
         }
     }
 
+    public void setGoalPosition() {
+        ArrayList<Position> goalPositionOptions = new ArrayList<>();
+        int columnsSize = this.getMazeNumOfCols();
+        int rowSize = this.getMazeNumOfRows();
+
+        for (int i = 0; i < columnsSize; i++) {
+            if (this.maze[0][i] == TRAN)
+                goalPositionOptions.add(new Position(0, i));
+            if (this.maze[rowSize - 1][i] == TRAN)
+                goalPositionOptions.add(new Position(rowSize - 1, i));
+        }
+
+        for (int i = 0; i < rowSize; i++) {
+            if (this.maze[i][0] == TRAN)
+                goalPositionOptions.add(new Position(i, 0));
+            if (this.maze[i][columnsSize - 1] == TRAN)
+                goalPositionOptions.add(new Position(i, columnsSize - 1));
+        }
+        if (goalPositionOptions.size() <= 1)
+            throw new RuntimeException();
+
+        int i = goalPositionOptions.size() - 1;
+        while (i >= 0) {
+            if (goalPositionOptions.get(i) != getStartPosition()) {
+                this.goal = goalPositionOptions.get(i);
+                break;
+            }
+            i--;
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

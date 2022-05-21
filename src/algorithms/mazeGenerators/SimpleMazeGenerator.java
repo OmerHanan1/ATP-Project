@@ -38,8 +38,8 @@ public class SimpleMazeGenerator extends AMazeGenerator{
             maze.SetTransition(currentPosition);
         }
         // Randomly break walls for make the grid more complicated.
-        // TODO: can make it more clever by change the random settings here.
-        //  For example, make transitions only for a block that is part of some path etc.
+        // can make it more clever by change the random settings here.
+        // For example, make transitions only for a block that is part of some path etc.
 
         for (int i = 0; i < maze.getMazeNumOfRows(); i++) {
             for (int j = 0; j < maze.getMazeNumOfCols(); j++) {

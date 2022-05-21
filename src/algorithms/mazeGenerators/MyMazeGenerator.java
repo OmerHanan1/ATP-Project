@@ -1,5 +1,4 @@
 package algorithms.mazeGenerators;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
@@ -7,18 +6,13 @@ import java.util.Stack;
 public class MyMazeGenerator extends AMazeGenerator {
     /**
      * generates maze using DFS
-     * //TODO: update the comments:
-     * Algorithm steps:
-     * (1)
-     * (2)
-     * (3)
      */
     @Override
     public Maze generate(int r, int c) {
-        return DFSMazeGenerator(r, c);
+        return DfsMazeGenerator(r, c);
     }
 
-    private Maze DFSMazeGenerator(int rows, int columns) {
+    private Maze DfsMazeGenerator(int rows, int columns) {
         // Arrange
         Random random = new Random();
         Maze maze = new Maze(rows, columns);
@@ -43,7 +37,7 @@ public class MyMazeGenerator extends AMazeGenerator {
                 neighbours.push(randNeighbour);
             }
         }
-        maze.SetTransition(new Position(rows - 1, columns - 2)); // Bug fix
+        maze.setGoalPosition();
         return maze;
     }
 }

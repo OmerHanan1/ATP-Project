@@ -1,5 +1,4 @@
 package algorithms.maze3D;
-
 import java.util.Objects;
 
 public class Position3D {

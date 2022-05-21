@@ -1,10 +1,8 @@
 package algorithms.maze3D;
-
 import algorithms.mazeGenerators.Position;
-
 import java.util.ArrayList;
-
 public class Maze3D {
+
     /**
      * Maze attributes
      */
@@ -179,9 +177,62 @@ public class Maze3D {
                 this.SetTransition(new Position3D(Math.min(currentPosition.getDepthIndex(), neighbour.getDepthIndex()) + 1, currentPosition.getRowIndex(), currentPosition.getColumnIndex()));
             }
         }
-        else {
+        else {}
+    }
 
+    public void setGoalPosition() {
+        ArrayList<Position3D> goalPositionOptions = new ArrayList<>();
+        int depthSize = this.getMazeNumOfDepth();
+        int columnsSize = this.getMazeNumOfCols();
+        int rowSize = this.getMazeNumOfRows();
+
+        for (int i = 0; i < rowSize; i++) {
+            for (int j = 0; j < columnsSize; j++) {
+                if (this.maze[0][i][j] == TRAN)
+                    goalPositionOptions.add(new Position3D(0, i, j));
+                if (this.maze[depthSize - 1][i][j] == TRAN)
+                    goalPositionOptions.add(new Position3D(depthSize - 1, i, j));
+            }
         }
+        for (int i = 0; i < depthSize; i++) {
+            for (int j = 0; j < columnsSize; j++) {
+                if (this.maze[i][0][j] == TRAN)
+                    goalPositionOptions.add(new Position3D(i, 0, j));
+                if (this.maze[i][rowSize - 1][j] == TRAN)
+                    goalPositionOptions.add(new Position3D(i, rowSize - 1, j));
+            }
+        }
+        for (int i = 0; i < depthSize; i++) {
+            for (int j = 0; j < rowSize; j++) {
+                if (this.maze[i][j][0] == TRAN)
+                    goalPositionOptions.add(new Position3D(i, j, 0));
+                if (this.maze[i][j][columnsSize - 1] == TRAN)
+                    goalPositionOptions.add(new Position3D(i, j, columnsSize - 1));
+            }
+        }
+        if (goalPositionOptions.size() <= 1)
+            throw new RuntimeException();
+
+        int i = goalPositionOptions.size() - 1;
+        while (i >= 0) {
+            if (goalPositionOptions.get(i) != getStartPosition()) {
+                this.goal = goalPositionOptions.get(i);
+                break;
+            }
+            i--;
+        }
+    }
+
+    private int getMazeNumOfDepth(){
+        return this.maze.length;
+    }
+
+    private int getMazeNumOfRows() {
+        return this.maze[0].length;
+    }
+
+    private int getMazeNumOfCols() {
+        return this.maze[0][0].length;
     }
 
     private boolean isValidPosition(Position3D position3D) {
