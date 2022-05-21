@@ -34,6 +34,18 @@ public class Position {
         }
     }
 
+    /**
+     * C-tor // string based format constructor
+     * @param str: the string represents the 2D position.
+     */
+    public Position(String str) throws IllegalArgumentException {
+        if (str.charAt(0) != '{' || str.charAt(str.length() - 1) != '}' || !str.contains(",") || str.length() < 5) // null check is unnecessary.
+            throw new IllegalArgumentException();
+        String[] parts = str.split(",");
+        this.row = Integer.parseInt(parts[0].substring(1));
+        this.col = Integer.parseInt(parts[1].substring(0, parts[1].length() - 1));
+    }
+
     public int getRowIndex() {
         return row;
     }
