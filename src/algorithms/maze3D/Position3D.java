@@ -10,10 +10,10 @@ public class Position3D {
     /**
      *
      */
-    public Position3D(int row, int col, int depth) {
+    public Position3D(int depth, int row, int col) {
+        this.depth = depth;
         this.row = row;
         this.col = col;
-        this.depth = depth;
     }
 
     // Pay attention to the chronology: depth > row > col:
