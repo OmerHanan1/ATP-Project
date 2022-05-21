@@ -45,25 +45,50 @@ public class Maze3D {
     // because we are using the same algorithms in order to generate the maze, (with some adaptions)
     // the following method will be the same.
     // we cannot re-use the code from project's first part (maze 2d) because it is not capable.
-    public void TranInitialize() {}
-    public void WallInitialize() {}
-    public void SetTransition(Position position) {}
-    public ArrayList<Position> GetWallNeighbour(Position currentPosition) {}
-    public ArrayList<Position> GetTransitionNeighbour(Position currentPosition) {}
-    public ArrayList<Position> wallsTwoStepsAway(Position currentPosition) {}
-    public boolean IsWall(Position position) {}
-    public void connectNeighbours(Position currentPosition, Position neighbour) throws IllegalArgumentException {}
 
-
-        private boolean isValidPosition(Position3D position3D) {
-        if (
-                position3D != null && 0 <= position3D.getDepthIndex() && this.maze.length < position3D.getDepthIndex() &&
-                        0 <= position3D.getRowIndex() && this.maze[0].length < position3D.getRowIndex() &&
-                        0 <= position3D.getColumnIndex() && this.maze[0][0].length < position3D.getColumnIndex()
-        ) {
-            return true;
+    public void TranInitialize() {
+        for (int i = 0; i < this.maze.length; i++) {
+            for (int j = 0; j < this.maze[0].length; j++) {
+                for (int k = 0; k < this.maze[0][0].length; k++) {
+                    this.maze[i][j][k] = TRAN; // transition = 0;
+                }
+            }
         }
-        return false;
+    }
+
+    public void WallInitialize() {
+        for (int i = 0; i < this.maze.length; i++) {
+            for (int j = 0; j < this.maze[0].length; j++) {
+                for (int k = 0; k < this.maze[0][0].length; k++) {
+                    this.maze[i][j][k] = WALL; // wall = 1;
+                }
+            }
+        }
+    }
+
+    public void SetTransition(Position position) {
+    }
+
+    public ArrayList<Position> GetWallNeighbour(Position currentPosition) {
+    }
+
+    public ArrayList<Position> GetTransitionNeighbour(Position currentPosition) {
+    }
+
+    public ArrayList<Position> wallsTwoStepsAway(Position currentPosition) {
+    }
+
+    public boolean IsWall(Position position) {
+    }
+
+    public void connectNeighbours(Position currentPosition, Position neighbour) throws IllegalArgumentException {
+    }
+
+
+    private boolean isValidPosition(Position3D position3D) {
+        return position3D != null && 0 <= position3D.getDepthIndex() && this.maze.length < position3D.getDepthIndex() &&
+                0 <= position3D.getRowIndex() && this.maze[0].length < position3D.getRowIndex() &&
+                0 <= position3D.getColumnIndex() && this.maze[0][0].length < position3D.getColumnIndex();
     }
 
 }
