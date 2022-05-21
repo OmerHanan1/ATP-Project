@@ -25,24 +25,24 @@ public class SimpleMazeGenerator extends AMazeGenerator{
         while (!currentPosition.equals(maze.getGoalPosition())) {
             if (random.nextInt(2) == 0) {
                 if (currentPosition.getRowIndex() > maze.getGoalPosition().getRowIndex())
-                    currentPosition = currentPosition.Up();
+                    currentPosition = currentPosition.getUpPosition();
                 if (currentPosition.getRowIndex() < maze.getGoalPosition().getRowIndex())
-                    currentPosition = currentPosition.Down();
+                    currentPosition = currentPosition.getDownPosition();
             } else {
                 if (currentPosition.getColumnIndex() > maze.getGoalPosition().getColumnIndex())
-                    currentPosition = currentPosition.Left();
+                    currentPosition = currentPosition.getLeftPosition();
                 if (currentPosition.getColumnIndex() < maze.getGoalPosition().getColumnIndex())
-                    currentPosition = currentPosition.Right();
+                    currentPosition = currentPosition.getRightPosition();
             }
 
             maze.SetTransition(currentPosition);
         }
         // Randomly break walls for make the grid more complicated.
-        // TODO: can make it more clever by change the random settings here.
-        //  For example, make transitions only for a block that is part of some path etc.
+        // can make it more clever by change the random settings here.
+        // For example, make transitions only for a block that is part of some path etc.
 
-        for (int i = 0; i < maze.getRows(); i++) {
-            for (int j = 0; j < maze.getCols(); j++) {
+        for (int i = 0; i < maze.getMazeNumOfRows(); i++) {
+            for (int j = 0; j < maze.getMazeNumOfCols(); j++) {
                 if (random.nextInt(2) == 0)
                     maze.SetTransition(new Position(i, j));
             }

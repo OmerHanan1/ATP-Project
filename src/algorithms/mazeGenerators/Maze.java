@@ -1,6 +1,8 @@
 package algorithms.mazeGenerators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Maze class
@@ -41,10 +43,30 @@ public class Maze {
         this.goal = goal;
     }
 
+    public int getMazeNumOfRows() {
+        return maze.length;
+    }
+
+    public int getMazeNumOfCols() {
+        return maze[0].length;
+    }
+
+    public int[][] getMaze() {
+        return maze;
+    }
+
+    public Position getStartPosition() {
+        return start;
+    }
+
+    public Position getGoalPosition() {
+        return goal;
+    }
+
     // Init maze with transitions "0"
     public void TranInitialize() {
-        for (int i = 0; i < this.getRows(); ++i) {
-            for (int j = 0; j < this.getCols(); ++j) {
+        for (int i = 0; i < this.getMazeNumOfRows(); ++i) {
+            for (int j = 0; j < this.getMazeNumOfCols(); ++j) {
                 // transition => 0 equality (final).
                 maze[i][j] = TRAN;
             }
@@ -54,14 +76,14 @@ public class Maze {
     // Check position inside array bounds and position is legal.
     public boolean validMazePosition(Position position) {
         return (position != null &&
-                0 <= position.getRowIndex() && position.getRowIndex() < this.getRows() &&
-                0 <= position.getColumnIndex() && position.getColumnIndex() < this.getCols());
+                0 <= position.getRowIndex() && position.getRowIndex() < this.getMazeNumOfRows() &&
+                0 <= position.getColumnIndex() && position.getColumnIndex() < this.getMazeNumOfCols());
     }
 
     // Init maze with walls "1"
     public void WallInitialize() {
-        for (int i = 0; i < this.getRows(); ++i) {
-            for (int j = 0; j < this.getCols(); ++j) {
+        for (int i = 0; i < this.getMazeNumOfRows(); ++i) {
+            for (int j = 0; j < this.getMazeNumOfCols(); ++j) {
                 // Wall => 1 equality (final).
                 maze[i][j] = WALL;
             }
@@ -79,9 +101,9 @@ public class Maze {
 
     // Print the maze in needed format
     public void print() {
-        for (int i = 0; i < this.getRows(); i++) {
+        for (int i = 0; i < this.getMazeNumOfRows(); i++) {
             System.out.print("{");
-            for (int j = 0; j < this.getCols(); j++) {
+            for (int j = 0; j < this.getMazeNumOfCols(); j++) {
                 if (this.start.equals(new Position(i, j)))
                     System.out.print(RED + " S" + RESET);
                 else if (this.goal.equals(new Position(i, j)))
@@ -97,17 +119,17 @@ public class Maze {
     public ArrayList<Position> GetWallNeighbour(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up();
-            if (IsWall(up)) //UP
+            Position up = currentPosition.getUpPosition();
+            if (this.validMazePosition(up) && IsWall(up)) //UP
                 wallsList.add(up);
-            Position right = currentPosition.Right();
-            if (IsWall(right)) //RIGHT
+            Position right = currentPosition.getRightPosition();
+            if (this.validMazePosition(right) && IsWall(right)) //RIGHT
                 wallsList.add(right);
-            Position down = currentPosition.Down();
-            if (IsWall(down)) //DOWN
+            Position down = currentPosition.getDownPosition();
+            if (this.validMazePosition(down) && IsWall(down)) //DOWN
                 wallsList.add(down);
-            Position left = currentPosition.Left();
-            if (IsWall(left)) //LEFT
+            Position left = currentPosition.getLeftPosition();
+            if (this.validMazePosition(left) && IsWall(left)) //LEFT
                 wallsList.add(left);
         }
         return wallsList;
@@ -117,17 +139,17 @@ public class Maze {
     public ArrayList<Position> GetTransitionNeighbour(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up();
-            if (!IsWall(up)) //UP
+            Position up = currentPosition.getUpPosition();
+            if (this.validMazePosition(up) && !IsWall(up)) //UP
                 wallsList.add(up);
-            Position right = currentPosition.Right();
-            if (!IsWall(right)) //RIGHT
+            Position right = currentPosition.getRightPosition();
+            if (this.validMazePosition(right) && !IsWall(right)) //RIGHT
                 wallsList.add(right);
-            Position down = currentPosition.Down();
-            if (!IsWall(down)) //DOWN
+            Position down = currentPosition.getDownPosition();
+            if (this.validMazePosition(down) && !IsWall(down)) //DOWN
                 wallsList.add(down);
-            Position left = currentPosition.Left();
-            if (!IsWall(left)) //LEFT
+            Position left = currentPosition.getLeftPosition();
+            if (this.validMazePosition(left) && !IsWall(left)) //LEFT
                 wallsList.add(left);
         }
         return wallsList;
@@ -137,17 +159,17 @@ public class Maze {
     public ArrayList<Position> wallsTwoStepsAway(Position currentPosition) {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
-            Position up = currentPosition.Up().Up();
-            if (IsWall(up))
+            Position up = currentPosition.getUpPosition().getUpPosition();
+            if (this.validMazePosition(up) && IsWall(up))
                 wallsList.add(up);
-            Position right = currentPosition.Right().Right();
-            if (IsWall(right))
+            Position right = currentPosition.getRightPosition().getRightPosition();
+            if (this.validMazePosition(right) && IsWall(right))
                 wallsList.add(right);
-            Position down = currentPosition.Down().Down();
-            if (IsWall(down))
+            Position down = currentPosition.getDownPosition().getDownPosition();
+            if (this.validMazePosition(down) && IsWall(down))
                 wallsList.add(down);
-            Position left = currentPosition.Left().Left();
-            if (IsWall(left))
+            Position left = currentPosition.getLeftPosition().getLeftPosition();
+            if (this.validMazePosition(left) && IsWall(left))
                 wallsList.add(left);
         }
         return wallsList;
@@ -165,7 +187,7 @@ public class Maze {
     // Connect two positions
     public void connectNeighbours(Position currentPosition, Position neighbour) throws IllegalArgumentException {
         if (!this.validMazePosition(currentPosition)) {
-            throw new IllegalArgumentException("one of the given positions is not a valid position in the maze");
+            throw new IllegalArgumentException();
         }
         if (currentPosition.getColumnIndex() == neighbour.getColumnIndex()) {
             this.SetTransition(new Position(Math.min(neighbour.getRowIndex(), currentPosition.getRowIndex()) + 1, currentPosition.getColumnIndex()));
@@ -174,23 +196,51 @@ public class Maze {
         }
     }
 
-    public int getRows() {
-        return maze.length;
+    public void setGoalPosition() {
+        ArrayList<Position> goalPositionOptions = new ArrayList<>();
+        int columnsSize = this.getMazeNumOfCols();
+        int rowSize = this.getMazeNumOfRows();
+
+        for (int i = 0; i < columnsSize; i++) {
+            if (this.maze[0][i] == TRAN)
+                goalPositionOptions.add(new Position(0, i));
+            if (this.maze[rowSize - 1][i] == TRAN)
+                goalPositionOptions.add(new Position(rowSize - 1, i));
+        }
+
+        for (int i = 0; i < rowSize; i++) {
+            if (this.maze[i][0] == TRAN)
+                goalPositionOptions.add(new Position(i, 0));
+            if (this.maze[i][columnsSize - 1] == TRAN)
+                goalPositionOptions.add(new Position(i, columnsSize - 1));
+        }
+        if (goalPositionOptions.size() <= 1)
+            throw new RuntimeException();
+
+        int i = goalPositionOptions.size() - 1;
+        while (i >= 0) {
+            if (goalPositionOptions.get(i) != getStartPosition()) {
+                this.goal = goalPositionOptions.get(i);
+                break;
+            }
+            i--;
+        }
     }
 
-    public int getCols() {
-        return maze[0].length;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Maze maze1 = (Maze) o;
+        return Arrays.equals(maze, maze1.maze) &&
+                start.equals(maze1.start) &&
+                goal.equals(maze1.goal);
     }
 
-    public int[][] getMaze() {
-        return maze;
-    }
-
-    public Position getStartPosition() {
-        return start;
-    }
-
-    public Position getGoalPosition() {
-        return goal;
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(start, goal);
+        result = 31 * result + Arrays.hashCode(maze);
+        return result;
     }
 }
