@@ -120,16 +120,16 @@ public class Maze {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
             Position up = currentPosition.Up();
-            if (IsWall(up)) //UP
+            if (this.validMazePosition(up) && IsWall(up)) //UP
                 wallsList.add(up);
             Position right = currentPosition.Right();
-            if (IsWall(right)) //RIGHT
+            if (this.validMazePosition(right) && IsWall(right)) //RIGHT
                 wallsList.add(right);
             Position down = currentPosition.Down();
-            if (IsWall(down)) //DOWN
+            if (this.validMazePosition(down) && IsWall(down)) //DOWN
                 wallsList.add(down);
             Position left = currentPosition.Left();
-            if (IsWall(left)) //LEFT
+            if (this.validMazePosition(left) && IsWall(left)) //LEFT
                 wallsList.add(left);
         }
         return wallsList;
@@ -140,16 +140,16 @@ public class Maze {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
             Position up = currentPosition.Up();
-            if (!IsWall(up)) //UP
+            if (this.validMazePosition(up) && !IsWall(up)) //UP
                 wallsList.add(up);
             Position right = currentPosition.Right();
-            if (!IsWall(right)) //RIGHT
+            if (this.validMazePosition(right) && !IsWall(right)) //RIGHT
                 wallsList.add(right);
             Position down = currentPosition.Down();
-            if (!IsWall(down)) //DOWN
+            if (this.validMazePosition(down) && !IsWall(down)) //DOWN
                 wallsList.add(down);
             Position left = currentPosition.Left();
-            if (!IsWall(left)) //LEFT
+            if (this.validMazePosition(left) && !IsWall(left)) //LEFT
                 wallsList.add(left);
         }
         return wallsList;
@@ -160,16 +160,16 @@ public class Maze {
         ArrayList<Position> wallsList = new ArrayList<>();
         if (currentPosition != null) {
             Position up = currentPosition.Up().Up();
-            if (IsWall(up))
+            if (this.validMazePosition(up) && IsWall(up))
                 wallsList.add(up);
             Position right = currentPosition.Right().Right();
-            if (IsWall(right))
+            if (this.validMazePosition(right) && IsWall(right))
                 wallsList.add(right);
             Position down = currentPosition.Down().Down();
-            if (IsWall(down))
+            if (this.validMazePosition(down) && IsWall(down))
                 wallsList.add(down);
             Position left = currentPosition.Left().Left();
-            if (IsWall(left))
+            if (this.validMazePosition(left) && IsWall(left))
                 wallsList.add(left);
         }
         return wallsList;

@@ -66,22 +66,93 @@ public class Maze3D {
         }
     }
 
-    public void SetTransition(Position position) {
+    public void SetTransition(Position3D position) {
+        if(isValidPosition(position)){
+            this.maze[position.getDepthIndex()][position.getRowIndex()][position.getColumnIndex()] = TRAN;
+        }
     }
 
-    public ArrayList<Position> GetWallNeighbour(Position currentPosition) {
+    public ArrayList<Position3D> GetWallNeighbour(Position3D currentPosition) {
+        ArrayList<Position3D> wallsList = new ArrayList<>();
+        if (currentPosition != null) {
+            Position3D up = currentPosition.getUpPosition();
+            if (this.isValidPosition(up) && IsWall(up)) //UP
+                wallsList.add(up);
+            Position3D right = currentPosition.getRightPosition();
+            if (this.isValidPosition(right) && IsWall(right)) //RIGHT
+                wallsList.add(right);
+            Position3D down = currentPosition.getDownPosition();
+            if (this.isValidPosition(down) && IsWall(down)) //DOWN
+                wallsList.add(down);
+            Position3D left = currentPosition.getLeftPosition();
+            if (this.isValidPosition(left) && IsWall(left)) //LEFT
+                wallsList.add(left);
+            Position3D high = currentPosition.getHigherPosition();
+            if (this.isValidPosition(high) && IsWall(down)) //DOWN
+                wallsList.add(down);
+            Position3D low = currentPosition.getLowerPosition();
+            if (this.isValidPosition(low) && IsWall(left)) //LEFT
+                wallsList.add(left);
+        }
+        return wallsList;
     }
 
-    public ArrayList<Position> GetTransitionNeighbour(Position currentPosition) {
+    public ArrayList<Position3D> GetTransitionNeighbour(Position3D currentPosition) {
+        ArrayList<Position3D> wallsList = new ArrayList<>();
+        if (currentPosition != null) {
+            Position3D up = currentPosition.getUpPosition();
+            if (this.isValidPosition(up) && !IsWall(up)) //UP
+                wallsList.add(up);
+            Position3D right = currentPosition.getRightPosition();
+            if (this.isValidPosition(right) && !IsWall(right)) //RIGHT
+                wallsList.add(right);
+            Position3D down = currentPosition.getDownPosition();
+            if (this.isValidPosition(down) && !IsWall(down)) //DOWN
+                wallsList.add(down);
+            Position3D left = currentPosition.getLeftPosition();
+            if (this.isValidPosition(left) && !IsWall(left)) //LEFT
+                wallsList.add(left);
+            Position3D high = currentPosition.getHigherPosition();
+            if (this.isValidPosition(high) && !IsWall(down)) //DOWN
+                wallsList.add(down);
+            Position3D low = currentPosition.getLowerPosition();
+            if (this.isValidPosition(low) && !IsWall(left)) //LEFT
+                wallsList.add(left);
+        }
+        return wallsList;
     }
 
-    public ArrayList<Position> wallsTwoStepsAway(Position currentPosition) {
+    public ArrayList<Position3D> wallsTwoStepsAway(Position3D currentPosition) {
+        ArrayList<Position3D> wallsList = new ArrayList<>();
+        if (currentPosition != null) {
+            Position3D up = currentPosition.getUpPosition().getUpPosition();
+            if (this.isValidPosition(up) && IsWall(up))
+                wallsList.add(up);
+            Position3D right = currentPosition.getRightPosition().getRightPosition();
+            if (this.isValidPosition(right) && IsWall(right))
+                wallsList.add(right);
+            Position3D down = currentPosition.getDownPosition().getDownPosition();
+            if (this.isValidPosition(down) && IsWall(down))
+                wallsList.add(down);
+            Position3D left = currentPosition.getLeftPosition().getLeftPosition();
+            if (this.isValidPosition(left) && IsWall(left))
+                wallsList.add(left);
+            Position3D high = currentPosition.getHigherPosition().getHigherPosition();
+            if (this.isValidPosition(high) && IsWall(high))
+                wallsList.add(high);
+            Position3D low = currentPosition.getLowerPosition().getLowerPosition();
+            if (this.isValidPosition(low) && IsWall(low))
+                wallsList.add(low);
+        }
+        return wallsList;
     }
 
-    public boolean IsWall(Position position) {
+    public boolean IsWall(Position3D position) {
+        return (isValidPosition(position) && this.maze[position.getDepthIndex()][position.getRowIndex()][position.getColumnIndex()] == WALL);
     }
 
-    public void connectNeighbours(Position currentPosition, Position neighbour) throws IllegalArgumentException {
+    public void connectNeighbours(Position3D currentPosition, Position3D neighbour) throws IllegalArgumentException {
+
     }
 
 
