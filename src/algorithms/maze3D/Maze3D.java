@@ -67,9 +67,9 @@ public class Maze3D {
     }
 
     public void SetTransition(Position3D position) {
-        if (isValidPosition(position)) {
+//        if (isValidPosition(position)) {
             this.maze[position.getDepthIndex()][position.getRowIndex()][position.getColumnIndex()] = TRAN;
-        }
+//        }
     }
 
     public ArrayList<Position3D> GetWallNeighbour(Position3D currentPosition) {
@@ -234,9 +234,12 @@ public class Maze3D {
         return this.maze[0][0].length;
     }
 
-    private boolean isValidPosition(Position3D position3D) {
-        return position3D != null && 0 <= position3D.getDepthIndex() && this.maze.length < position3D.getDepthIndex() &&
-                0 <= position3D.getRowIndex() && this.maze[0].length < position3D.getRowIndex() &&
-                0 <= position3D.getColumnIndex() && this.maze[0][0].length < position3D.getColumnIndex();
+    private boolean isValidPosition(Position3D position) {
+//        return true;
+        return (position != null &&
+                0 <= position.getRowIndex() && position.getRowIndex() < this.getMazeNumOfRows() &&
+                0 <= position.getColumnIndex() && position.getColumnIndex() < this.getMazeNumOfCols() &&
+                0 <= position.getDepthIndex() && position.getDepthIndex() < this.getMazeNumOfDepth()
+        );
     }
 }
