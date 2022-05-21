@@ -3,6 +3,7 @@ package algorithms.mazeGenerators;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Maze class
@@ -107,7 +108,7 @@ public class Maze {
                 if (this.start.equals(new Position(i, j)))
                     System.out.print(RED + " S" + RESET);
                 else if (this.goal.equals(new Position(i, j)))
-                    System.out.print(RED + " F" + RESET);
+                    System.out.print(RED + " E" + RESET);
                 else
                     System.out.print(" " + this.maze[i][j]);
             }
@@ -197,6 +198,7 @@ public class Maze {
     }
 
     public void setGoalPosition() {
+        Random rnd = new Random();
         ArrayList<Position> goalPositionOptions = new ArrayList<>();
         int columnsSize = this.getMazeNumOfCols();
         int rowSize = this.getMazeNumOfRows();
@@ -217,14 +219,9 @@ public class Maze {
         if (goalPositionOptions.size() <= 1)
             throw new RuntimeException();
 
-        int i = goalPositionOptions.size() - 1;
-        while (i >= 0) {
-            if (goalPositionOptions.get(i) != getStartPosition()) {
-                this.goal = goalPositionOptions.get(i);
-                break;
-            }
-            i--;
-        }
+        do
+            this.goal = (goalPositionOptions.get(rnd.nextInt(goalPositionOptions.size())));
+        while (this.getStartPosition().equals(this.getGoalPosition()));
     }
 
     @Override

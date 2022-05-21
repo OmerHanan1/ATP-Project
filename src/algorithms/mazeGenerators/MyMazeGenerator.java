@@ -14,7 +14,7 @@ public class MyMazeGenerator extends AMazeGenerator {
 
     private Maze DfsMazeGenerator(int rows, int columns) {
         // Arrange
-        Random random = new Random();
+        Random rnd = new Random();
         Maze maze = new Maze(rows, columns);
         Stack<Position> neighbours = new Stack<>();
         ArrayList<Position> neighbourWalls;
@@ -31,7 +31,7 @@ public class MyMazeGenerator extends AMazeGenerator {
 
             if (neighbourWalls.size() != 0) {
                 neighbours.push(currentPosition);
-                Position randNeighbour = neighbourWalls.get(random.nextInt(neighbourWalls.size()));
+                Position randNeighbour = neighbourWalls.get(rnd.nextInt(neighbourWalls.size()));
                 maze.SetTransition(randNeighbour);
                 maze.connectNeighbours(currentPosition, randNeighbour);
                 neighbours.push(randNeighbour);

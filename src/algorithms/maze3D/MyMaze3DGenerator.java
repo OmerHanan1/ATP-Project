@@ -10,7 +10,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator {
     }
 
     private Maze3D DfsMaze3dGenerator(int depth, int rows, int columns) {
-        Random random = new Random();
+        Random rnd = new Random();
         Maze3D maze = new Maze3D(depth, rows, columns);
         Stack<Position3D> neighbours = new Stack<>();
         ArrayList<Position3D> neighbourWalls;
@@ -23,7 +23,7 @@ public class MyMaze3DGenerator extends AMaze3DGenerator {
             neighbourWalls = maze.wallsTwoStepsAway(currentPosition);
             if (neighbourWalls.size() != 0) {
                 neighbours.push(currentPosition);
-                Position3D randNeighbour = neighbourWalls.get(random.nextInt(neighbourWalls.size()));
+                Position3D randNeighbour = neighbourWalls.get(rnd.nextInt(neighbourWalls.size()));
                 maze.SetTransition(randNeighbour);
                 maze.connectNeighbours(currentPosition, randNeighbour);
                 neighbours.push(randNeighbour);

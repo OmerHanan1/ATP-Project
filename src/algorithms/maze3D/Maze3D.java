@@ -1,6 +1,8 @@
 package algorithms.maze3D;
 import algorithms.mazeGenerators.Position;
 import java.util.ArrayList;
+import java.util.Random;
+
 public class Maze3D {
 
     /**
@@ -181,6 +183,7 @@ public class Maze3D {
     }
 
     public void setGoalPosition() {
+        Random rnd = new Random();
         ArrayList<Position3D> goalPositionOptions = new ArrayList<>();
         int depthSize = this.getMazeNumOfDepth();
         int columnsSize = this.getMazeNumOfCols();
@@ -213,15 +216,11 @@ public class Maze3D {
         if (goalPositionOptions.size() <= 1)
             throw new RuntimeException();
 
-        int i = goalPositionOptions.size() - 1;
-        while (i >= 0) {
-            if (goalPositionOptions.get(i) != getStartPosition()) {
-                this.goal = goalPositionOptions.get(i);
-                break;
-            }
-            i--;
-        }
+        do
+            this.goal = (goalPositionOptions.get(rnd.nextInt(goalPositionOptions.size())));
+        while (this.getStartPosition().equals(this.getGoalPosition()));
     }
+
 
     private int getMazeNumOfDepth(){
         return this.maze.length;

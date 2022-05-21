@@ -6,7 +6,7 @@ public class SimpleMazeGenerator extends AMazeGenerator{
     @Override
     public Maze generate(int r, int c) {
         // Init settings (arrange).
-        Random random = new Random();
+        Random rnd = new Random();
         Maze maze = new Maze(r, c);
         Position currentPosition; // Empty pos.
 
@@ -23,7 +23,7 @@ public class SimpleMazeGenerator extends AMazeGenerator{
         maze.SetTransition(maze.getGoalPosition());
 
         while (!currentPosition.equals(maze.getGoalPosition())) {
-            if (random.nextInt(2) == 0) {
+            if (rnd.nextInt(2) == 0) {
                 if (currentPosition.getRowIndex() > maze.getGoalPosition().getRowIndex())
                     currentPosition = currentPosition.getUpPosition();
                 if (currentPosition.getRowIndex() < maze.getGoalPosition().getRowIndex())
@@ -38,12 +38,12 @@ public class SimpleMazeGenerator extends AMazeGenerator{
             maze.SetTransition(currentPosition);
         }
         // Randomly break walls for make the grid more complicated.
-        // can make it more clever by change the random settings here.
+        // can make it more clever by change the rnd settings here.
         // For example, make transitions only for a block that is part of some path etc.
 
         for (int i = 0; i < maze.getMazeNumOfRows(); i++) {
             for (int j = 0; j < maze.getMazeNumOfCols(); j++) {
-                if (random.nextInt(2) == 0)
+                if (rnd.nextInt(2) == 0)
                     maze.SetTransition(new Position(i, j));
             }
         }
