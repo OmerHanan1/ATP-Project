@@ -184,11 +184,9 @@ public class Maze3D {
         }
     }
 
-
     private boolean isValidPosition(Position3D position3D) {
         return position3D != null && 0 <= position3D.getDepthIndex() && this.maze.length < position3D.getDepthIndex() &&
                 0 <= position3D.getRowIndex() && this.maze[0].length < position3D.getRowIndex() &&
                 0 <= position3D.getColumnIndex() && this.maze[0][0].length < position3D.getColumnIndex();
     }
-
 }
