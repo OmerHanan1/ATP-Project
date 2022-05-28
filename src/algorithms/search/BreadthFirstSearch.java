@@ -10,6 +10,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         this.q= new LinkedList<>();
     }
 
+    // Constructor for Best-first-search set up:
     public BreadthFirstSearch(Queue<AState> q){
         super();
         this.q = q;
@@ -47,7 +48,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm{
         have_been_visited.add(start.toString());
 
         while (!q.isEmpty()&&flag){
-            curr=q.poll();
+            curr=q.poll(); // polling the first element (Dequeue).
             legal_positions=s.getAllPossibleStates(curr);
             if(curr.equals(goal)){
                 flag=false;

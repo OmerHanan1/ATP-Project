@@ -13,8 +13,8 @@ public abstract class AState implements Serializable {
 
     // Constructor:
     public AState(AState prevState, Object currentState, int cost) {
-        this.currentState = currentState;
         this.from = prevState;
+        this.currentState = currentState;
         this.cost = cost;
     }
 
