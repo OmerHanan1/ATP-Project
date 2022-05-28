@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class RunSearchOnMaze3D {
     public static void main(String[] args) throws Exception {
         IMazeGenerator3D mg = new MyMaze3DGenerator();
-//        Maze3D maze = mg.generate(100, 100, 100);
+        // This maze is taken from work instructions:
         int[][][] map = {
                 {
                         {0, 0, 1, 0, 1},
@@ -24,13 +24,10 @@ public class RunSearchOnMaze3D {
                         {1, 1, 1, 0, 1}}
         };
         Maze3D maze = new Maze3D(map, new Position3D(0, 0, 0), new Position3D(0, 2, 4));
-
         SearchableMaze3D searchableMaze = new SearchableMaze3D(maze);
-//        maze.printColored();
-//        maze.print();
 
         solveProblem(searchableMaze, new BreadthFirstSearch());
-//        solveProblem(searchableMaze, new DepthFirstSearch());
+        solveProblem(searchableMaze, new DepthFirstSearch());
         solveProblem(searchableMaze, new BestFirstSearch());
     }
 

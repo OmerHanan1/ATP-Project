@@ -33,32 +33,36 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
      */
     @Override
     public Solution solve(ISearchable s) throws Exception {
-        if (s==null){
-            throw new Exception("the is no solution to empty problem");
+        if (s == null){
+            throw new Exception();
         }
-        Stack<AState> sol=new Stack<>();
 
         AState start = s.getStartState();
         AState goal=s.getGoalState();
         ArrayList<AState> temp=new ArrayList<>();
-        AState curr=start;
-        this.stack.push(start);
+        AState curr=s.getStartState();
+        ArrayList<AState> legal_positions;
+        Stack<AState> sol=new Stack<>();
+        HashSet<String> have_been_visited=new HashSet<>();
+        boolean flag = true;
+        stack.add(start);
+        have_been_visited.add(start.toString());
 
-        ArrayList<AState> legal_possitions;
-        HashSet<AState> have_been_visited=new HashSet<>();
-
-        while (!curr.equals(goal)||!stack.empty()){
+        while (!stack.isEmpty()&&flag){
             curr=stack.pop();
-            have_been_visited.add(curr);
+            legal_positions=s.getAllPossibleStates(curr);
+            if(curr.equals(goal)){
+                flag=false;
+            }
 
-            legal_possitions=s.getAllPossibleStates(curr);
-            for (int i=0;i< legal_possitions.size();i++){
-                if(!(this.stack.contains(legal_possitions.get(i)))||!(have_been_visited.contains(legal_possitions.get(i)))){
-                    this.stack.push(legal_possitions.get(i));
-                    this.NumberOfNodesEvaluated++;
+            for (AState legal_position : legal_positions) {
+                if (!have_been_visited.contains(legal_position.toString())) {
+                    stack.add(legal_position);
+                    have_been_visited.add(legal_position.toString());
                 }
             }
         }
+        setNumberOfNodesEvaluated(have_been_visited.size());
         return getSolution(sol, start, goal, temp, curr);
     }
 
@@ -78,5 +82,10 @@ public class DepthFirstSearch extends ASearchingAlgorithm{
             temp.add(sol.pop());
         }
         return new Solution(temp);
+    }
+
+    @Override
+    public String getName() {
+        return "Depth First Search";
     }
 }
