@@ -85,6 +85,22 @@ public class Position {
         return new Position(this.row, this.col-1);
     }
 
+    public Position getLeftUpPosition() {
+        return new Position(this.row-1, this.col - 1);
+    }
+
+    public Position getLeftDownPosition() {
+        return new Position(this.row+1, this.col - 1);
+    }
+
+    public Position getRightUpPosition() {
+        return new Position(this.row-1, this.col + 1);
+    }
+
+    public Position getRightDownPosition() {
+        return new Position(this.row+1, this.col + 1);
+    }
+
     @Override
     public String toString() {
         return "{" + this.row + "," + this.col + '}';

@@ -221,7 +221,6 @@ public class Maze3D {
         while (this.getStartPosition().equals(this.getGoalPosition()));
     }
 
-
     private int getMazeNumOfDepth(){
         return this.maze.length;
     }
@@ -234,7 +233,7 @@ public class Maze3D {
         return this.maze[0][0].length;
     }
 
-    private boolean isValidPosition(Position3D position) {
+    public boolean isValidPosition(Position3D position) {
 //        return true;
         return (position != null &&
                 0 <= position.getRowIndex() && position.getRowIndex() < this.getMazeNumOfRows() &&
