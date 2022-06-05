@@ -44,6 +44,15 @@ public class Maze {
         this.goal = goal;
     }
 
+    public Maze(byte[] bytes) throws IllegalArgumentException{
+        try{
+            this.maze = new int[bytes[0]][bytes[2]];
+        }
+        catch(Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
     public int getMazeNumOfRows() {
         return maze.length;
     }
@@ -239,5 +248,10 @@ public class Maze {
         int result = Objects.hash(start, goal);
         result = 31 * result + Arrays.hashCode(maze);
         return result;
+    }
+
+    public byte[] toByteArray(){
+        byte[] b = new byte[0];
+        return b;
     }
 }
