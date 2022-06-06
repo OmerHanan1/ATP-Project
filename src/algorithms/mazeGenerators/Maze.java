@@ -12,6 +12,7 @@ public class Maze {
     /**
      * Maze attributes
      */
+    public static final int BASE = 127;
     public static final int WALL = 1;
     public static final int TRAN = 0;
     private int[][] maze;
@@ -44,11 +45,17 @@ public class Maze {
         this.goal = goal;
     }
 
-    public Maze(byte[] bytes) throws IllegalArgumentException{
-        try{
-            this.maze = new int[bytes[0]][bytes[2]];
-        }
-        catch(Exception e){
+    public Maze(byte[] bytes) throws IllegalArgumentException {
+        int k = 12;
+        try {
+            this.maze = new int[baseConversionByteToInt(bytes[0], bytes[1])][baseConversionByteToInt(bytes[2], bytes[3])];
+            this.start = new Position(baseConversionByteToInt(bytes[4], bytes[5]), baseConversionByteToInt(bytes[6], bytes[7]));
+            this.goal = new Position(baseConversionByteToInt(bytes[8],bytes[9]), baseConversionByteToInt(bytes[10],bytes[11]));
+            for (int i=0; i<this.maze.length; i++){
+                for(int j=0; j<this.maze[0].length; j++)
+                    this.maze[i][j] = bytes[k++];
+            }
+        } catch (Exception e) {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
@@ -250,8 +257,48 @@ public class Maze {
         return result;
     }
 
-    public byte[] toByteArray(){
-        byte[] b = new byte[0];
-        return b;
+    public byte[] toByteArray() {
+        byte[] finalDataEncryption = soldering(baseConversionIntToByte(this.getMazeNumOfRows()), baseConversionIntToByte(this.getMazeNumOfCols()));
+
+        byte[] encryptedStartPosition = soldering(baseConversionIntToByte(this.getStartPosition().getRowIndex()),
+                baseConversionIntToByte(this.getStartPosition().getColumnIndex()));
+
+        byte[] encryptedGoalPosition = soldering(baseConversionIntToByte(this.getGoalPosition().getRowIndex()),
+                baseConversionIntToByte(this.getGoalPosition().getColumnIndex()));
+
+        finalDataEncryption = soldering(finalDataEncryption, encryptedStartPosition);
+        finalDataEncryption = soldering(finalDataEncryption, encryptedGoalPosition);
+
+        byte[] gridAsArray = new byte[this.getMazeNumOfRows() * this.getMazeNumOfCols()];
+
+        int k = 0;
+        for (int i = 0; i < this.getMazeNumOfRows(); i++) {
+            for (int j = 0; j < this.getMazeNumOfCols(); j++)
+                gridAsArray[k++] = (byte) this.maze[i][j];
+        }
+        return soldering(finalDataEncryption, gridAsArray);
+    }
+
+    // Every number can be represent in 127 base (natural 128 numbers in byte representation).
+    // Only this base conversion is optimal. (Large numbers [positive]128*127 +127 = 16388, small amount of bytes 2).
+    public byte[] baseConversionIntToByte(int number) {
+        byte[] sol = new byte[2];
+        sol[0] = (byte) (number % BASE);
+        sol[1] = (byte) ((number / BASE) % BASE);
+        return sol;
+    }
+
+    public int baseConversionByteToInt(byte l, byte m) {
+        // Base conversion works the same for second direction.
+        // Maximum number to represent 16,388 (unsigned is above 32,000).
+        // Other direction will be useful decryption, which basically done at construction.
+        return m * BASE + l;
+    }
+
+    public byte[] soldering(byte[] first, byte[] second) {
+        byte[] newArray = new byte[first.length + second.length];
+        System.arraycopy(first, 0, newArray, 0, first.length);
+        System.arraycopy(second, 0, newArray, first.length, second.length);
+        return newArray;
     }
 }
