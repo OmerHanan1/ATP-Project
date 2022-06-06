@@ -14,5 +14,4 @@ public class GeneralCheckingFunctions {
         String githubLink = "https://github.com/OmerHanan1/ATP-Project";
         return githubLink;
     }
-
 }
