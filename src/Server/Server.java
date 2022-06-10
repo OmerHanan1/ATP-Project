@@ -22,23 +22,36 @@ public class Server {
 
     private final ExecutorService threadPool;
 
+    /**
+     * constractor
+     * @param port
+     * @param listeningIntervalMS
+     * @param strategy
+     */
+
 
     public Server(int port, int listeningIntervalMS, IServerStrategy strategy) {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.strategy = strategy;
-
         int num_threads = Configurations.getInstance().getNumOfThreads();
-
+        this.stop=false;
         this.threadPool = Executors.newFixedThreadPool(num_threads);
 
     }
 
+    /**
+     * starting the thread
+     */
+
     public void start() {
-        Thread thread = new Thread(this::run);
-        thread.start();
+        new Thread(this::run).start();
 
     }
+
+    /**
+     * this function is runing the server
+     */
 
     public void run() {
         try {
@@ -46,13 +59,13 @@ public class Server {
             serverSocket.setSoTimeout(this.listeningIntervalMS);
 
 
-            while (!this.stop) {
+            while (!stop) {
                 try {
                     Socket clientSocket = serverSocket.accept();
-                    threadPool.submit(()->{handleClient(clientSocket);});
+                    threadPool.submit(()->handleClient(clientSocket));
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    //throw new RuntimeException(e);
                 }
 
             }
@@ -62,24 +75,32 @@ public class Server {
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
 
     }
+
+    /**
+     * handling clients requests with the right strategy
+     * @param clientSocket
+     */
 
     private void handleClient(Socket clientSocket) {
         try {
             this.strategy.ServerStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
 
             clientSocket.close();
-        } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
-                InstantiationException | IllegalAccessException ioException) {
-            ioException.printStackTrace();
+        } catch (IOException exception) {
+           exception.printStackTrace();
 
         }
 
     }
+
+    /**
+     * stopping the server from running
+     */
 
     public void stop() {
 

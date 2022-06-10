@@ -13,7 +13,7 @@ import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
 
-public class Configurations {
+public class  Configurations {
     private static final Properties properties = new Properties();
     private static Configurations instance = null;
 
@@ -28,21 +28,28 @@ public class Configurations {
         }
     }
 
-    public static AMazeGenerator getGenerator() {
-        String p = properties.getProperty("mazeGeneratingAlgorithm");
-        AMazeGenerator mazeGenerator = null;
-        if (p.equals("MyMazeGenerator")) {
-            mazeGenerator = new MyMazeGenerator();
-        }
-        if (p.equals("SimpleMazeGenerator")) {
-            mazeGenerator = new SimpleMazeGenerator();
-        }
-        return mazeGenerator;
+    /**
+     *
+     * @return string that represent the right maze generator
+     * @throws Exception
+     */
+
+
+
+    public String getMazeGenerating() throws Exception {
+
+        return properties.getProperty("mazeGeneratingAlgorithm");
     }
+
+    /**
+     *
+     * @return searching algorithm from the configuration file
+     */
+
 
     public static ASearchingAlgorithm getSearching() {
         ASearchingAlgorithm algorithm = null;
-        assert false;
+        //assert false;
         String p = properties.getProperty("mazeSearchingAlgorithm");
         if (Objects.equals(p, "BestFirstSearch")) {
             algorithm = new BestFirstSearch();
@@ -55,6 +62,11 @@ public class Configurations {
         }
         return algorithm;
     }
+
+    /**
+     *
+     * @return num of threads
+     */
 
     public int getNumOfThreads() {
         return Integer.parseInt(properties.getProperty("threadPoolSize"));

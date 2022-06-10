@@ -75,4 +75,8 @@ public class MyCompressorOutputStream extends OutputStream {
         this.out.flush();
         super.flush();
     }
+
+    public OutputStream getOut() {
+        return out;
+    }
 }

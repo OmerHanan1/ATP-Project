@@ -10,14 +10,29 @@ import java.util.HashMap;
 public class ServerStrategySolveSearchProblem implements IServerStrategy{
     private HashMap<Integer,String> map;
 
+    /**
+     * constractor
+     */
+
 
     public ServerStrategySolveSearchProblem() {
         map=new HashMap<>();
     }
 
+    /**
+     *getting the maze from the client and send final solution to him after this function
+     * using strategy design so we could select the algorithm in run-time
+     * we used the fact that hash code is unique, so we saved him as a key with the right path
+     * @param InputFromClient
+     * @param OutputToClient
+     */
+
     @Override
-    public void ServerStrategy(InputStream InputFromClient, OutputStream OutputToClient) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void ServerStrategy(InputStream InputFromClient, OutputStream OutputToClient)  {
         try {
+            if (InputFromClient == null){
+                throw new Exception("need to insert input");
+            }
             ObjectOutputStream toClient=new ObjectOutputStream(OutputToClient);
             ObjectInputStream fromClient=new ObjectInputStream(InputFromClient);
             toClient.flush();
