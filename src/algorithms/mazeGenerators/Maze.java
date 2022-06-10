@@ -1,5 +1,6 @@
 package algorithms.mazeGenerators;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Random;
 /**
  * Maze class
  */
-public class Maze {
+public class Maze implements Serializable {
     /**
      * Maze attributes
      */
